@@ -1,16 +1,20 @@
+package com.yayarh.pvccalculator
+
+import PrefsMan
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,13 +78,12 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, prefs: PrefsMan) {
 
     val scrollState = rememberScrollState()
 
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Button(modifier = Modifier.align(Alignment.End), onClick = onNavigateToSettings) { Text("Settings") }
+    Column(Modifier.fillMaxWidth().verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
+
+        IconButton(
+            modifier = Modifier.align(Alignment.End),
+            onClick = onNavigateToSettings
+        ) { Icon(painter = painterResource("settings_black_24dp.svg"), null) }
 
         Spacer(Modifier.height(16.dp))
 
@@ -99,15 +102,15 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, prefs: PrefsMan) {
         Spacer(Modifier.height(8.dp))
 
         Row {
-            Button({
+            IconButton({
                 pvcVerticalCount = (pvcVerticalCount.toIntOrZero() - 1).toString()
-            }, content = { Text(text = "-") })
+            }, content = { Icon(painter = painterResource("remove_black_24dp.svg"), null) })
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = pvcVerticalCount, modifier = Modifier.align(Alignment.CenterVertically), fontSize = 20.sp)
             Spacer(modifier = Modifier.width(8.dp))
-            Button({
+            IconButton({
                 pvcVerticalCount = (pvcVerticalCount.toIntOrZero() + 1).toString()
-            }, content = { Text(text = "+") })
+            }, content = { Icon(painter = painterResource("add_black_24dp.svg"), null) })
         }
 
         Spacer(Modifier.height(16.dp))
@@ -121,15 +124,15 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, prefs: PrefsMan) {
         Spacer(Modifier.height(8.dp))
 
         Row {
-            Button({
+            IconButton({
                 pvcHorizontalCount = (pvcHorizontalCount.toIntOrZero() - 1).toString()
-            }, content = { Text(text = "-") })
+            }, content = { Icon(painter = painterResource("remove_black_24dp.svg"), null) })
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = pvcHorizontalCount, modifier = Modifier.align(Alignment.CenterVertically), fontSize = 20.sp)
             Spacer(modifier = Modifier.width(8.dp))
-            Button({
+            IconButton({
                 pvcHorizontalCount = (pvcHorizontalCount.toIntOrZero() + 1).toString()
-            }, content = { Text(text = "+") })
+            }, content = { Icon(painter = painterResource("add_black_24dp.svg"), null) })
         }
 
         //endregion
@@ -212,7 +215,12 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, prefs: PrefsMan) {
 fun SettingsScreen(onNavigatingBack: () -> Unit, prefs: PrefsMan) {
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Button(modifier = Modifier.align(Alignment.Start), onClick = onNavigatingBack) { Text("Back") }
+        IconButton(modifier = Modifier.align(Alignment.Start), onClick = onNavigatingBack) {
+            Icon(
+                painterResource("arrow_back_black_24dp(1).svg"),
+                null
+            )
+        }
 
         var pvcPrice: String by rememberSaveable { mutableStateOf(prefs.getPvcPrice().toString()) }
         var glassPrice: String by rememberSaveable {
@@ -221,12 +229,6 @@ fun SettingsScreen(onNavigatingBack: () -> Unit, prefs: PrefsMan) {
         var shutterPrice: String by rememberSaveable {
             mutableStateOf(prefs.getShutterPrice().toString())
         }
-
-        Button({
-            prefs.setPvcPrice(pvcPrice.toIntOrZero())
-            prefs.setGlassPrice(glassPrice.toIntOrZero())
-            prefs.setShutterPrice(shutterPrice.toIntOrZero())
-        }) { Text("Save") }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -283,6 +285,18 @@ fun SettingsScreen(onNavigatingBack: () -> Unit, prefs: PrefsMan) {
             Spacer(modifier = Modifier.weight(1F))
             Text("DA/m", Modifier.weight(2F))
         }
+
+        Spacer(Modifier.height(24.dp))
+
+        Button(modifier = Modifier.fillMaxWidth().padding(horizontal = 48.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+            border = BorderStroke(1.dp, Brush.linearGradient(listOf(Color.Black, Color.Gray))),
+            onClick = {
+                prefs.setPvcPrice(pvcPrice.toIntOrZero())
+                prefs.setGlassPrice(glassPrice.toIntOrZero())
+                prefs.setShutterPrice(shutterPrice.toIntOrZero())
+            }) { Text("Save") }
+
     }
 }
 
