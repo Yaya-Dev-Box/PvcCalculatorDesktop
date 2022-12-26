@@ -1,0 +1,3 @@
+pvcPrice=150
+glassPrice=200
+shutterPrice=50
