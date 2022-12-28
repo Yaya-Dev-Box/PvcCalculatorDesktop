@@ -26,11 +26,13 @@ tasks.withType<KotlinCompile> {
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "com.yayarh.pvccalculator.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "PvcCalculator"
             packageVersion = "1.0.0"
+            vendor = "Yahia RH"
+            copyright = "Yahia RH"
         }
     }
 }
