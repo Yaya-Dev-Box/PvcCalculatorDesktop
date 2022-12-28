@@ -23,7 +23,7 @@ import androidx.compose.ui.window.application
 import com.yayarh.pvccalculator.Extensions.toIntOrZero
 
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication) { App() }
+    Window(onCloseRequest = ::exitApplication, title = "PVC Calculator", icon = painterResource("default_icon.png")) { App() }
 }
 
 @Composable
@@ -91,48 +91,56 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, prefs: PrefsMan) {
 
         Text(text = "PVC" + " " + prefs.getPvcPrice() + " DA/m")
 
-        Spacer(Modifier.height(8.dp))
-
-        DimensionTextField(
-            value = pvcVerticalLength,
-            placeholder = "Vertical bars length (cm)",
-            onValueChange = { pvcVerticalLength = it }
-        )
-
-        Spacer(Modifier.height(8.dp))
-
-        Row {
-            IconButton({
-                pvcVerticalCount = (pvcVerticalCount.toIntOrZero() - 1).toString()
-            }, content = { Icon(painter = painterResource("remove_black_24dp.svg"), null) })
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = pvcVerticalCount, modifier = Modifier.align(Alignment.CenterVertically), fontSize = 20.sp)
-            Spacer(modifier = Modifier.width(8.dp))
-            IconButton({
-                pvcVerticalCount = (pvcVerticalCount.toIntOrZero() + 1).toString()
-            }, content = { Icon(painter = painterResource("add_black_24dp.svg"), null) })
-        }
-
         Spacer(Modifier.height(16.dp))
 
-        DimensionTextField(
-            value = pvcHorizontalLength,
-            placeholder = "Horizontal bars length (cm)",
-            onValueChange = { pvcHorizontalLength = it }
-        )
-
-        Spacer(Modifier.height(8.dp))
-
         Row {
-            IconButton({
-                pvcHorizontalCount = (pvcHorizontalCount.toIntOrZero() - 1).toString()
-            }, content = { Icon(painter = painterResource("remove_black_24dp.svg"), null) })
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = pvcHorizontalCount, modifier = Modifier.align(Alignment.CenterVertically), fontSize = 20.sp)
-            Spacer(modifier = Modifier.width(8.dp))
-            IconButton({
-                pvcHorizontalCount = (pvcHorizontalCount.toIntOrZero() + 1).toString()
-            }, content = { Icon(painter = painterResource("add_black_24dp.svg"), null) })
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+                DimensionTextField(
+                    value = pvcVerticalLength,
+                    placeholder = "Vertical bars length (cm)",
+                    onValueChange = { pvcVerticalLength = it }
+                )
+
+                Spacer(Modifier.height(8.dp))
+
+                Row {
+                    IconButton({
+                        pvcVerticalCount = (pvcVerticalCount.toIntOrZero() - 1).toString()
+                    }, content = { Icon(painter = painterResource("remove_black_24dp.svg"), null) })
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = pvcVerticalCount, modifier = Modifier.align(Alignment.CenterVertically), fontSize = 20.sp)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    IconButton({
+                        pvcVerticalCount = (pvcVerticalCount.toIntOrZero() + 1).toString()
+                    }, content = { Icon(painter = painterResource("add_black_24dp.svg"), null) })
+                }
+            }
+
+            Spacer(Modifier.width(32.dp))
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                DimensionTextField(
+                    value = pvcHorizontalLength,
+                    placeholder = "Horizontal bars length (cm)",
+                    onValueChange = { pvcHorizontalLength = it }
+                )
+
+                Spacer(Modifier.height(8.dp))
+
+                Row {
+                    IconButton({
+                        pvcHorizontalCount = (pvcHorizontalCount.toIntOrZero() - 1).toString()
+                    }, content = { Icon(painter = painterResource("remove_black_24dp.svg"), null) })
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = pvcHorizontalCount, modifier = Modifier.align(Alignment.CenterVertically), fontSize = 20.sp)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    IconButton({
+                        pvcHorizontalCount = (pvcHorizontalCount.toIntOrZero() + 1).toString()
+                    }, content = { Icon(painter = painterResource("add_black_24dp.svg"), null) })
+                }
+            }
         }
 
         //endregion
@@ -148,7 +156,7 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, prefs: PrefsMan) {
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(16.dp))
 
                 DimensionTextField(
                     value = glassVerticalLength,
@@ -174,7 +182,7 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, prefs: PrefsMan) {
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(16.dp))
 
                 DimensionTextField(
                     value = shutterVerticalLength,
@@ -217,7 +225,7 @@ fun SettingsScreen(onNavigatingBack: () -> Unit, prefs: PrefsMan) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         IconButton(modifier = Modifier.align(Alignment.Start), onClick = onNavigatingBack) {
             Icon(
-                painterResource("arrow_back_black_24dp(1).svg"),
+                painterResource("arrow_back_black_24dp.svg"),
                 null
             )
         }
